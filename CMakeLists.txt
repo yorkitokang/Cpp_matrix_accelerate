@@ -14,7 +14,7 @@ add_executable(project4 ${DIR_SRCS})
 
 target_link_libraries(project4 cblas)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
 
 FIND_PACKAGE( OpenMP REQUIRED)
 if(OPENMP_FOUND)

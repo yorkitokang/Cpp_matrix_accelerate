@@ -343,12 +343,14 @@ bool matmul_improved(const Matrix *matrix_one, const Matrix *matrix_two, Matrix 
 #endif
 
 #ifdef WITH_NEON
+#pragma omp parallel for
   for (ii = 0; ii < result->rows; ii++)
   {
     for (jj = 0; jj < result->columns; jj++)
     {
       // temp variable
-      float a1, a2, a3, a4 float b1, b2, b3, b4
+      float a1, a2, a3, a4;
+      float b1, b2, b3, b4;
       // temp string
       float tempData[4] = {0, 0, 0, 0};
       // temp index
@@ -370,18 +372,9 @@ bool matmul_improved(const Matrix *matrix_one, const Matrix *matrix_two, Matrix 
         }
         else
         {
-          a1 = *(ka);
-          a2 = *(ka + 1);
-          a3 = *(ka + 2);
-          a4 = *(ka + 3);
 
-          b1 = *(kb);
-          b2 = *(kb + 1 * matrix_two->columns);
-          b3 = *(kb + 2 * matrix_two->columns);
-          b4 = *(kb + 3 * matrix_two->columns);
-
-          float32x4_t a = vld1q_f32_x4(a1, a2, a3, a4);
-          float32x4_t b = vld1q_f32_x4(b1, b2, b3, b4);
+          float32x4_t a = vld1q_f32_x4(ka);
+          float32x4_t b = vld1q_f32_x4(kb);
 
           float32x4_t product = vmulq_f32(a, b);
 
