@@ -1,0 +1,1 @@
+/usr/bin/cc   -fopenmp CMakeFiles/project4.dir/src/matrix1D.c.o CMakeFiles/project4.dir/src/test.c.o -o project4  -lcblas 
